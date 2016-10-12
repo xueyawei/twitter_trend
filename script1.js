@@ -26,8 +26,8 @@ var svg_user = d3.select("#user")
 
 
 d3.queue()
-    .defer(d3.json,'data/parsed_hashtags.json')
-    .defer(d3.json,'data/brands_hashtags_slim.json')
+    .defer(d3.json,'parsed_hashtags.json')
+    .defer(d3.json,'brands_hashtags_slim.json')
     .await(function(error,users,brands){
         console.log(users);
         console.log(brands);
