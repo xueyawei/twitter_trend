@@ -1,0 +1,14 @@
+html,body,div,ul,li,svg{
+    font-family: sans-serif;
+
+}
+#container{
+
+    position:fixed;
+    top: 5%;
+    left: 10%;
+}
+
+li{
+    font-size: 20px;
+}
