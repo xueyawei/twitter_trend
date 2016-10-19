@@ -26,11 +26,11 @@ var svg_user = d3.select("#user")
 
 
 d3.queue()
-    .defer(d3.json,'../data/parsed_hashtags.json')
+    .defer(d3.json,'../data/ootd_hashtag.json')
     .await(function(error,users){
         console.log(users);
 
-
+        
         draw_user(users,height);
         //draw_brand(brands,brands_div_height);
 
