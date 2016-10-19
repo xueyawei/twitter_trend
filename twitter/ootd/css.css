@@ -68,10 +68,3 @@ body{
 .b_t.hidden {
     display: none;
 }
-
-#time_range{
-    margin-top:20px;
-    margin-left: 20px;
-    font-weight: bold;
-    color:black;
-}
