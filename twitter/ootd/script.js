@@ -30,7 +30,8 @@ d3.queue()
     .await(function(error,users){
         console.log(users);
 
-        
+        users.shift();
+        users.shift();
         draw_user(users,height);
         //draw_brand(brands,brands_div_height);
 
