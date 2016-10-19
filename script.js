@@ -80,7 +80,7 @@ d3.json('text_count_filtered.json',function(data){
 
 
             d3.select('#tooltip')
-                .text('#'+d.text+" ---- "+d.count)
+                .text(d.text+" ---- "+d.count)
 
             d3.select("#tooltip").classed("hidden", false);
 
