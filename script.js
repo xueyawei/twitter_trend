@@ -1,13 +1,13 @@
 
-console.log("###")
+console.log("###");
 
 
 
 // d3
 
 var margin = {t:50,l:50,b:50,r:50},
-    width = document.getElementById('container').clientWidth-margin.l-margin.r,
-    height = document.getElementById('container').clientHeight-margin.t-margin.b;
+    width = document.getElementById('user').clientWidth-margin.l-margin.r,
+    height = document.getElementById('user').clientHeight-margin.t-margin.b;
 
 var svg = d3.select('.canvas')
     .append('svg')
@@ -17,71 +17,79 @@ var svg = d3.select('.canvas')
 
 // draw
 
-var hashtag_data = [{name: 'fashion', count: 0}];
-d3.json("twitter_data.json",function(data){
+
+d3.json('text_count_filtered.json',function(data){
     console.log(data);
-    for(var i = 0; i<data.data.length;i++){
-        //console.log(data.data[i].entities.hashtags.length);
 
-        data.data[i].entities.hashtags.forEach(function(d){
-            var found = false;
-            hashtag_data.forEach(function (d1) {
-                if(d1.name==d.text.toLowerCase()){
-                    found = true;
-                    d1.count++;
-                    return false
-                }
 
-            });
-            if(found == false){
-                hashtag_data.push({name: d.text.toLowerCase(),count: 1 })
-            }
-        })
-    }
+    var y = d3.scaleLinear().range([height, 0]).domain([0,data[0].count]);
+    //var color = d3.scaleLinear().domain([0,hashtag_data[0].count]).range(["red","blue"]);
 
-    //console.log(hashtag_data);
-    hashtag_data.sort(function(a,b){
-        return b.count - a.count;
-    });
-
-    hashtag_data.shift();
-    hashtag_data.shift();
-    console.log(hashtag_data);
-
-    var y = d3.scale.linear().range([height, 0]).domain([0,500]);
 
     var g = svg.append("g")
         .attr("transform", "translate(" + margin.l + "," + margin.t + ")");
 
+
+    g.append('text')
+        .attr("x", width/2)
+        .attr("y", height/2-100)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "14px")
+        .attr("font-weight", "bold")
+        .attr("fill", "black")
+        .text('Brands tweets: Apr 11 2016 ---> Oct 11 2016');
+
+    g.append('text')
+        .attr("x", width/2)
+        .attr("y", height/2-114)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "14px")
+        .attr("font-weight", "bold")
+        .attr("fill", "black")
+        .text('User tweets: Oct 09 2016 ---> Oct 11 2016');
+
+
+
+    var hashtag_number = 100;
+
+    g.append("text")
+        .attr("id", "tooltip")
+        .attr("x", width/2)
+        .attr("y", height/2)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "25px")
+        .attr("font-weight", "bold")
+        .attr("fill", "red");
+
+
     g.selectAll(".bar")
-        .data(hashtag_data.filter(function(d,i){
-            return i<10;
+        .data(data.filter(function(d,i){
+            return i<hashtag_number;
         }))
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("x", function(d,i) { return i*(width/10) })
+        .attr("x", function(d,i) { return i*(width/hashtag_number) })
         .attr("y", function(d) { return y(d.count); })
-        .attr("width", function(){return width/10 - 10})
-        .attr("height", function(d) { return height - y(d.count); });
+        .attr("width", function(){return width/hashtag_number - 5})
+        .attr("height", function(d) { return height - y(d.count); })
+        .on('mouseover',function(d,i){
+            d3.select(this).style("fill","blue");
 
-    g.selectAll(".text")
-        .data(hashtag_data.filter(function(d,i){
-            return i<10;
-        }))
-        .enter()
-        .append('text')
-        .text(function(d){return '#'+d.name})
-        .attr("x", function(d,i) { return i*(width/10) })
-        .attr("y", function(d) { return height+20; })
 
-    g.selectAll(".text")
-        .data(hashtag_data.filter(function(d,i){
-            return i<10;
-        }))
-        .enter()
-        .append('text')
-        .text(function(d){return d.count})
-        .attr("x", function(d,i) { return i*(width/10)+20 })
-        .attr("y", function(d) { return y(d.count)-20; })
+            d3.select('#tooltip')
+                .text('#'+d.text+" ---- "+d.count)
 
+            d3.select("#tooltip").classed("hidden", false);
+
+
+
+
+        })
+        .on('mouseout',function(d,i){
+            d3.select(this).style("fill",'black')
+            d3.select("#tooltip").classed("hidden", true);
+        })
 })
