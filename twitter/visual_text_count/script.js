@@ -91,5 +91,61 @@ d3.json('../data/text_count_filtered.json',function(data){
         .on('mouseout',function(d,i){
             d3.select(this).style("fill",'black')
             d3.select("#tooltip").classed("hidden", true);
-        })
+        });
+
+    for(var i=0; i< 4;i++){
+        generate_table(data,i)
+    }
 })
+
+function generate_table(data,col){
+    // var g = svg_table.append("g")
+    //     .attr("transform", "translate(" + margin.l + "," + margin.t + ")");
+
+    var table = d3.select("#table")
+        .append("div")
+        .attr("class","table")
+        .style("float","left")
+        .append("table");
+
+    var thead = ["Word","Count"];
+    // var th = table.selectAll("tr").append("tr")
+    //     .data(thead)
+    //     .enter()
+    //     .append("th")
+    //     .html(function (d) {
+    //         return d
+    //     })
+
+    // create table header
+    table.append('thead').append('tr')
+        .selectAll('th')
+        .data(thead).enter()
+        .append('th')
+        .style("text-align","left")
+        // .attr('class', ƒ('cl'))
+        .text(function (d) {
+            return d
+        });
+
+    var tr = table.selectAll("tr")
+        .data(data.filter(function (d,i) {
+            // console.log("s: "+(col*25)+" e: "+((col+1)*25))
+            return (i<(25*(col+1)))&&(i>=(25*col))
+        }))
+        .enter()
+        .append("tr");
+
+    tr.append('td')
+        .attr('class', 'hashtag')
+        .html(function(d) { return d.text; });
+
+    tr.append('td')
+        .attr('class', 'number')
+        .style("text-align","right")
+        .html(function(d) { return d.count; });
+
+
+
+
+}

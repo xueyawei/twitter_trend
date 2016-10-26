@@ -68,3 +68,23 @@ body{
 .b_t.hidden {
     display: none;
 }
+
+/*table*/
+
+tr{
+    background-color: #afd3ff;
+
+
+}
+td{
+    background-color: #cdcdcd;
+
+}
+table{
+    color: #000000;
+    font-family: 'Helvetica Neue', Helvetica;
+    font-weight: 400;
+    padding: 20px;
+    width: 280px;
+    margin: 30px;
+}

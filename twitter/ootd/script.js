@@ -21,6 +21,10 @@ var svg_user = d3.select("#user")
     .attr('width',width+margin.l+margin.r)
     .attr('height',height+margin.t+margin.b);
 
+// var svg_table = d3.select("#table")
+//     .append('svg')
+//     .attr('width',width+margin.l+margin.r)
+//     .attr('height',height+margin.t+margin.b);
 
 
 
@@ -30,12 +34,67 @@ d3.queue()
     .await(function(error,users){
         console.log(users);
 
-        users.shift();
-        users.shift();
+        
         draw_user(users,height);
-        //draw_brand(brands,brands_div_height);
+        for(var i=0; i< 4;i++){
+            generate_table(users,i)
+        }
+
+
 
     });
+
+function generate_table(data,col){
+    // var g = svg_table.append("g")
+    //     .attr("transform", "translate(" + margin.l + "," + margin.t + ")");
+
+    var table = d3.select("#table")
+        .append("div")
+        .attr("class","table")
+        .style("float","left")
+        .append("table");
+
+    var thead = ["Hashtag","Count"];
+    // var th = table.selectAll("tr").append("tr")
+    //     .data(thead)
+    //     .enter()
+    //     .append("th")
+    //     .html(function (d) {
+    //         return d
+    //     })
+
+    // create table header
+    table.append('thead').append('tr')
+        .selectAll('th')
+        .data(thead).enter()
+        .append('th')
+        .style("text-align","left")
+        // .attr('class', ƒ('cl'))
+        .text(function (d) {
+            return d
+        });
+
+    var tr = table.selectAll("tr")
+        .data(data.filter(function (d,i) {
+            // console.log("s: "+(col*25)+" e: "+((col+1)*25))
+            return (i<(25*(col+1)))&&(i>=(25*col))
+        }))
+        .enter()
+        .append("tr");
+
+    tr.append('td')
+        .attr('class', 'hashtag')
+        .html(function(d) { return d.name; });
+
+    tr.append('td')
+        .attr('class', 'number')
+        .style("text-align","right")
+        .html(function(d) { return d.count; });
+
+
+
+
+}
 
 function draw_user(hashtag_data,height){
     var y = d3.scaleLinear().range([height, 0]).domain([0,hashtag_data[0].count]);
