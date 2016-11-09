@@ -72,3 +72,7 @@ body{
 .b_t.hidden {
     display: none;
 }
+
+.data_dot.hidden{
+    display: none;
+}
