@@ -122,6 +122,8 @@ function draw_all(twi){
         .style("display","none");
     g.select(".axis--x line")
         .style("display","none");
+    g.select(".axis--y text")
+        .style("display","none");
 
     last_e = g.selectAll(".axis--x line")
     size = last_e.size()
@@ -276,59 +278,6 @@ function draw_all(twi){
 
     }
 
-    // var focus = g.append("g")
-    //     .attr("class", "focus")
-    //     .style("display", "none");
-    //
-    // focus.append("circle")
-    //     .attr("r", 3);
-    //
-    // focus.append("text")
-    //     .attr("id","date-text")
-    //     .attr("x", 9)
-    //     .attr("dy", ".35em");
-
-    // focus.append("line")
-    //     .attr('x1',"0")
-    //     .attr('x2',"0")
-    //     .attr('y1','0')
-    //     .attr('y2',height)
-    //     .style("stroke-width","2")
-    //     .style("stroke","black")
-    //     .style("opacity","0.5")
-
-    // g.append("line")
-    //     .attr("id","x-line")
-    //     .attr('x1',"0")
-    //     .attr('x2',width)
-    //     .attr('y1','0')
-    //     .attr('y2',"0")
-    //     .style("stroke-width","2")
-    //     .style("stroke","black")
-    //     .style("opacity","0.5")
-
-
-
-    // g.append("rect")
-    //     .attr("class", "overlay")
-    //     .attr("width", width)
-    //     .attr("height", height)
-    //     .on("mouseover", function() { focus.style("display", null); })
-    //     .on("mouseout", function() { focus.style("display", "none"); })
-    //     .on("mousemove", mousemove);
-    //
-    // function mousemove() {
-    //     var x0 = x.invert(d3.mouse(this)[0])
-    //     var y0 = y.invert(d3.mouse(this)[1])
-    //
-    //
-    //     focus.attr("transform", "translate(" + x(x0) + ", 0)");
-    //     focus.select("text").text(time_format(x0)+" ===> "+y0);
-    //     // focus.select("#x-line")
-    //     //     .attr("y1",y(y0))
-    //     //     .attr("y2",y(y0));
-    // }
-
 
 }
 
@@ -387,6 +336,8 @@ function draw_line_twi(twi,div,line_class) {
     g.select(".axis--y line")
         .style("display","none");
     g.select(".axis--x line")
+        .style("display","none");
+    g.select(".axis--y text")
         .style("display","none");
     last_e = g.selectAll(".axis--x line")
     size = last_e.size()

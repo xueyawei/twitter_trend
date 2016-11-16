@@ -56,7 +56,10 @@ body{
     stroke: rgb(185, 185, 185);
     stroke-dasharray: 5;
 }
-
+.axis--x text,.axis--y text{
+    font-family: 'Quicksand';
+    font-weight: 700;
+}
 
 
 .overlay {
