@@ -19,11 +19,11 @@ var all_data = [];
 
 
 var stroke_color =[
-    {
-        "name":"flight",
-        "color": "#ffa902",
-        "class": "flight_line"
-    },
+    // {
+    //     "name":"flight",
+    //     "color": "#ffa902",
+    //     "class": "flight_line"
+    // },
     {
         "name":"bomber",
         "color": "#90c9e8",
@@ -47,19 +47,24 @@ d3.queue()
     .defer(d3.json,'./data/off_the_shoulder.json')
     .defer(d3.json,'./data/playsuit.json')
     .await(function(error,flight,bomber,off_s,playsuit){
-        // console.log(twi);
-        // console.log(goo);
 
-        all_data.push(parse_json(flight))
-        all_data.push(parse_json(bomber))
-        all_data.push(parse_json(off_s))
-        all_data.push(parse_json(playsuit))
+        var combined_fli_bom = [];
+        combined_fli_bom = combined_fli_bom.concat(flight,bomber);
 
-        draw_all(all_data)
+        all_data.push(parse_json(combined_fli_bom))
+        // all_data.push(parse_json(flight));
+        // all_data.push(parse_json(bomber));
+        all_data.push(parse_json(off_s));
+        all_data.push(parse_json(playsuit));
+
+        console.log("=====================")
+
+
+        draw_all(all_data);
         draw_line_twi(all_data[0],"#gt",stroke_color[0].class);
-        draw_line_twi(all_data[1],"#bomber",stroke_color[1].class);
-        draw_line_twi(all_data[2],"#off_s",stroke_color[2].class);
-        draw_line_twi(all_data[3],"#playsuit",stroke_color[3].class);
+        // draw_line_twi(all_data[1],"#bomber",stroke_color[1].class);
+        draw_line_twi(all_data[1],"#off_s",stroke_color[1].class);
+        draw_line_twi(all_data[2],"#playsuit",stroke_color[2].class);
 
 
 
@@ -76,8 +81,8 @@ function draw_all(twi){
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
-    x.domain(d3.extent(twi[1], function(d) { return d.date; }));
-    y.domain([0,d3.max(twi[1],function(d){return d.count})]);
+    x.domain(d3.extent(twi[0], function(d) { return d.date; }));
+    y.domain([0,d3.max(twi[0],function(d){return d.count})]);
 
     var svg = d3.select("#all-in-one")
         .append('svg')
@@ -352,31 +357,6 @@ function draw_line_twi(twi,div,line_class) {
         .attr('stroke-width',3)
         .attr('fill','none');
 
-    // dot tooltip
-
-    // g.selectAll(".data_dot")
-    //     .data(twi)
-    //     .enter()
-    //     .append("circle")
-    //     .attr("class","data_dot")
-    //     .attr("r", 5)
-    //     .attr("cx", function(d) { return x(d.date); })
-    //     .attr("cy", function(d) { return y(d.count); })
-    //     .style("opacity","0")
-    //     .on("mouseover", function(d) {
-    //         div.transition()
-    //             .duration(200)
-    //             .style("opacity", .9);
-    //         div	.html(time_format(d.date) + "<br/>"  + "Tweets: "+d.count)
-    //             .style("left", (d3.event.pageX) + "px")
-    //             .style("top", (d3.event.pageY - 28) + "px");
-    //     })
-    //     .on("mouseout", function(d) {
-    //         div.transition()
-    //             .duration(500)
-    //             .style("opacity", 0);
-    //     });
-
 
 
     // x tooltip
@@ -411,7 +391,10 @@ function draw_line_twi(twi,div,line_class) {
             d = x0 - d0.date > d1.date - x0 ? d1 : d0;
         focus.attr("transform", "translate(" + x(d.date) + "," + y(d.count) + ")");
         focus.select("text").text(time_format(d.date)+": "+d.count);
+
     }
+
+
 
 }
 
@@ -419,16 +402,15 @@ function draw_line_twi(twi,div,line_class) {
 
 function parse_json(data){
 
-    parsed_data = []
+    var parsed_data = []
 
-
-    console.log(data)
     for(var i=0;i<data.length;i++){
-        data[i].timestamp_t = new Date(parseInt(data[i].timestamp_t)*1000)
-        day = data[i].timestamp_t.getDate()
-        month = data[i].timestamp_t.getMonth()
-        year = data[i].timestamp_t.getFullYear()
-        date_string = year+"-"+month+"-"+day
+        var timestamp_t = new Date(parseInt(data[i].timestamp_t)*1000)
+        // data[i].timestamp_t = new Date(parseInt(data[i].timestamp_t)*1000)
+        var day = timestamp_t.getDate()
+        var month = timestamp_t.getMonth()
+        var year = timestamp_t.getFullYear()
+        var date_string = year+"-"+month+"-"+day
 
         if(i==0){
             parsed_data.push({
@@ -437,7 +419,7 @@ function parse_json(data){
             })
         }
         else{
-            is_found = false
+            var is_found = false
             for(var j = 0 ; j<parsed_data.length;j++){
                 if(date_string==parsed_data[j].date){
                     parsed_data[j].count++
@@ -457,32 +439,8 @@ function parse_json(data){
     for(var i = 0 ; i<parsed_data.length; i++){
         parsed_data[i].date = parseTime(parsed_data[i].date)
     }
-    console.log(parsed_data)
+
     return parsed_data
-    // for(var i = 0; i<parsed_data.length;i++){
-    //     for(var j =0 ; j<data.length;j++){
-    //         if(
-    //             (data[j].created_at.getDate()==parsed_data[i].datetime.getDate())&&
-    //             ((data[j].created_at.getHours()>=parsed_data[i].datetime.getHours())&&
-    //                 (data[j].created_at.getHours()<(parsed_data[i].datetime.getHours()+1)))
-    //         ){
-    //             parsed_data[i].value++;
-    //         }
-    //     }
-    // }
-    //
-    // var y = d3.scaleLinear()
-    //     .rangeRound([0, 100]);
-    //
-    // y.domain([d3.min(parsed_data,function(d){return d.value}),d3.max(parsed_data,function(d){return d.value})]);
-    //
-    // parsed_data.forEach(function (d) {
-    //     d.value_percentage = y(d.value)
-    // });
-    //
-    //
-    //
-    // console.log("Parsed twi:");
-    // console.log(parsed_data);
-    // return parsed_data
+
 }
+

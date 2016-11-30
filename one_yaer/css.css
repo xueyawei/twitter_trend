@@ -38,8 +38,22 @@ body{
     width:100%;
 }
 .canvas{
-    width:100%;
+    width:70%;
     height:400px;
+    clear: left;
+    float: left;
+}
+.news_table{
+    width: 30%;
+    height: 400px;
+    float: right;
+}
+table{
+    padding: 0px;
+    margin: 0px;
+}
+.news_table table{
+    /*margin-top:20px;*/
 }
 .canvas1{
     width:100%;
@@ -111,3 +125,4 @@ body{
 .all_circle{
     stroke:black;
 }
+
