@@ -52,6 +52,13 @@ table{
     padding: 0px;
     margin: 0px;
 }
+select{
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+}
+option{
+    font-weight: bold;
+}
 .news_table table{
     /*margin-top:20px;*/
 }
