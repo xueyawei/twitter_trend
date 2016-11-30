@@ -56,11 +56,11 @@ var stroke_color =[
     }
 ];
 var object_id = {
-    "id_01": "flight bomber",
-    "id_02": "off the shoulder",
-    "id_03": "culottes",
-    "id_04": "jumper shorts",
-    "id_05": "rompers playsuit"
+    "id_01": "Flight Jacket + Bomber Jacket",
+    "id_02": "Off-The-Shoulder",
+    "id_03": "Culottes",
+    "id_04": "Jumper Shorts",
+    "id_05": "Rompers + Playsuit"
 
 }
 
@@ -179,16 +179,33 @@ function draw_all(twi){
         .attr("class","all_tooltip")
         .style("opacity","0");
 
-    tooltip_width = 200;
+    tooltip_width = 270;
 
     all_tooltip.append("rect")
         .attr("x",20)
-        .attr("y",50)
+        .attr("y",30)
         .attr("rx",10)
         .attr("ry",10)
         .attr("width",tooltip_width)
-        .attr("height",50)
+        .attr("height",70)
         .style("fill","#bbc3c4");
+
+    all_tooltip.append("circle")
+        .attr("cx",35)
+        .attr("cy",44)
+        .attr("r","6")
+        .attr("id","line_color_circle")
+        .style("stroke","black")
+        .style("stroke-width","2")
+
+    all_tooltip.append("text")
+        .attr("id","id_text")
+        .attr("x",45)
+        .attr("y",50)
+        .style("font-weight","bold")
+        .text("hello")
+
+
 
     all_tooltip.append("text")
         .attr("id","date_text")
@@ -282,6 +299,20 @@ function draw_all(twi){
                     .transition()
                     .duration(200)
                     .style("opacity","0.2");
+
+                var id_text,text_color
+                stroke_color.forEach(function (d) {
+                    if(d.class==get_class){
+                        id_text = d.id
+                        text_color = d.color
+                    }
+                })
+
+                d3.select("#id_text")
+                    .text(object_id[id_text])
+
+                d3.select("#line_color_circle")
+                    .style("fill",text_color)
 
                 d3.select("#date_text")
                     .text("Date: "+time_format(single_data.date));
