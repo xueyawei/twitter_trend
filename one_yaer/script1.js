@@ -266,7 +266,7 @@ function draw_all(twi){
             .attr("class","all_circle")
             .classed(stroke_color[i].class,true)
             .attr("r",'5')
-            .style("fill","none")
+            .style("fill","white")
             .style("stroke-width","3")
             .style("opacity","0")
             .attr("cx",function(d){
