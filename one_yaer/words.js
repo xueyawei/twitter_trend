@@ -1,5 +1,8 @@
 
 
+document.body.onselectstart = function () {
+    return false;
+};
 
 d3.json("./data/news/words_frequency_ordered.json",function (data) {
     console.log(data)
@@ -36,6 +39,11 @@ d3.json("./data/news/words_frequency_ordered.json",function (data) {
         .attr("colspan","2")
         .html(function (d) {
             return d.date
+        })
+        .on("click",function () {
+            var this_table = d3.select(this.parentNode.parentNode).selectAll("td")
+            this_table.classed("toggle_color",false)
+
         })
 
     var title = date_row.append("tr");
@@ -82,17 +90,9 @@ d3.json("./data/news/words_frequency_ordered.json",function (data) {
         })
 
 
-    // date_row.selectAll("tr")
-    //     .data(function (d) {
-    //         return d.news_word.filter(function (k,i) {
-    //             return i<10
-    //         })
-    //     })
-    //     .enter()
-    //     .append("td")
-    //     .html(function (d) {
-    //         return d.key+": "+d.value
-    //     })
+    d3.selectAll("table").node.onselectstart = function () {
+        return false
+    }
 
 
 })
