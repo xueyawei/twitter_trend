@@ -56,7 +56,18 @@ d3.json("./data/news/words_frequency_ordered.json",function (data) {
         })
         .enter()
         .append("tr")
-        .attr("class","data_cel");
+        .attr("class","data_cel")
+        .on("click",function () {
+            console.log("Clicked!")
+            var color_class = d3.select(this).select("td").classed("toggle_color")
+            console.log(color_class)
+            if(!d3.select(this).select("td").classed("toggle_color")){
+                d3.select(this).selectAll("td").classed("toggle_color",true)
+            }
+            else{
+                d3.select(this).selectAll("td").classed("toggle_color",false)
+            }
+        })
 
     colums.append("td")
         .attr("class","key_col")
