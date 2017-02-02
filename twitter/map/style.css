@@ -1,0 +1,70 @@
+html, body, div, ul, li, svg {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+/*------------Global-------------*/
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    height: 100%;
+    /*position: relative;*/
+    background: #FDFEFF;
+}
+
+.container .section {
+    width: 100%;
+}
+
+.canvas {
+    width: 100%;
+    height: 700px;
+}
+
+.container .controls {
+    margin-bottom: 20px;
+}
+
+h1, h3 {
+    margin-left: 20px;
+}
+
+/*-----------Brush---------------*/
+.brush .extent {
+    fill: #2A577A;
+    fill-opacity: .3;
+    shape-rendering: crispEdges;
+}
+
+.axis .domain {
+    fill: none;
+    opacity: 0.3;
+    stroke: #000;
+    /*stroke-opacity: .3;*/
+    /*stroke-width: 5px;*/
+    /*stroke-linecap:round;*/
+}
+
+.axis {
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    font-size: 50%;
+    font-family: 'Josefin Sans', sans-serif;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+/*-----------Dots---------------*/
+.hiddenDots {
+    opacity: 0;
+}
