@@ -68,3 +68,12 @@ h1, h3 {
 .hiddenDots {
     opacity: 0;
 }
+
+/*-----------button---------------*/
+#startMoving {
+    text-align: center;
+}
+#startMoving button{
+    font-size: 24px;
+    padding: 6px 24px;
+}

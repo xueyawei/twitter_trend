@@ -4,6 +4,8 @@ var margin = {t: 50, l: 50, b: 50, r: 50},
 
 console.log(width + " " + document.getElementById('map').clientHeight)
 
+
+
 var svg = d3.select('.canvas')
     .append('svg')
     .attr("class","mainSvg")
