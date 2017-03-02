@@ -34,6 +34,7 @@ d3.queue()
     .await(function(error,flightBomber,usMap){
 
         var usaMap = svg.append("g")
+            .attr("class","mapClass")
 
         console.log(usMap)
 
@@ -46,12 +47,13 @@ d3.queue()
 
 
         var dots = usaMap.append("g")
+            .attr("class","single dots")
 
         dots.selectAll("circle")
             .data(flightBomber)
             .enter()
             .append("circle")
-            .attr("class","dot")
+            .attr("class","dot single")
             .attr("r","5")
             .attr("cx",function (d) {
                 return projection([d.location.coordinate.lng, d.location.coordinate.lat])[0]
@@ -67,6 +69,9 @@ d3.queue()
 
         var startDate = flightBomber[0].timestamp
         var endDate = flightBomber[flightBomber.length-1].timestamp
+
+        // overlay
+        // calculateOL(d3.selectAll(".single circle"))
 
         // Generate Brush
         brushAxis(startDate,endDate);
