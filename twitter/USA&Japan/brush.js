@@ -1,7 +1,7 @@
 var brushMovingStat = false;
 
 
-function brushAxis(start, end) {
+function brushAxis(start, end, ol, country) {
     var mList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var startDate = start
     var endDate = end
@@ -113,7 +113,7 @@ function brushAxis(start, end) {
 
             d3.select(".brush")
                 .transition()
-                .duration(500)
+                .duration(800)
                 // .call(brush)
                 .call(brush.move, [startPointOfCurrentBrush, endPointOfCurrentBrush])
 
@@ -133,7 +133,7 @@ function brushAxis(start, end) {
             }
 
 
-        }, 500)
+        }, 600)
 
 
     }
@@ -168,19 +168,168 @@ function brushAxis(start, end) {
         }
         var x0 = xScale.invert(currentSelection[0]),
             x1 = xScale.invert(currentSelection[1])
+        console.log(ol)
+        var dataset = overlay(ol[0].filter(function (d) {
+            return (d.timestamp >= x0 && d.timestamp <= x1)
+        }), ol[1], ol[2])
 
 
-        d3.selectAll(".dot")
+        console.log("Filtered Data:")
+        console.log(dataset)
+
+        d3.select('#circleGroup')
             .transition()
-            .duration(800)
-            .style("opacity", function (d) {
-                if (d.timestamp >= x0 && d.timestamp <= x1) {
-                    return 1
-                }
-                else
-                    return 0
+            .duration(300)
+            .on('end', function (d, i) {
+                d3.selectAll('.dot,.dotText')
+                    .remove()
+
+                console.log("QQ")
+
+
+                var entered = d3.select('#circleGroup')
+                    .selectAll(".dot")
+                    .data(dataset)
+                    .enter();
+
+                var colorRange = ['#E7EDF1','#105378']
+
+                var colorScale = d3.scaleLog().range(colorRange)
+
+                colorScale.domain(d3.extent(dataset,function (d) {
+                    return d.main.number
+                }))
+
+                entered
+                    .append('circle')
+                    .attr('class', 'dot')
+                    .attr('cx', function (d) {
+                        return d.x
+                    })
+                    .attr('cy', function (d) {
+                        return d.y
+                    })
+                    .attr('r', ol[2])
+                    .style("fill",function (d) {
+                        return colorScale(d.main.number)
+                    })
+
+                entered
+                    .append('text')
+                    .text(function (d) {
+                        return d.main.number
+                    })
+                    .attr('class', 'dotText')
+                    .attr('x', function (d) {
+                        return d.x - 5
+                    })
+                    .attr('y', function (d) {
+                        return d.y + 5
+                    })
+                d3.select('#circleGroup')
+                    .transition()
+                    .duration(300)
+                    .style('opacity', 1)
+
+            })
+            .style("opacity", 0)
+
+
+        // d3.selectAll(".dot")
+        //     .transition()
+        //     .duration(800)
+        //     .style("opacity", function (d) {
+        //         if (d.timestamp >= x0 && d.timestamp <= x1) {
+        //             return 1
+        //         }
+        //         else
+        //             return 0
+        //     })
+
+        // update bar chart
+
+        var data = ol[0].filter(function (d) {
+            return (d.timestamp >= x0 && d.timestamp <= x1)
+        })
+        var barHeight = height / 2
+        var cityList = []
+        if (country == 'usa') {
+            cityList = [
+                {
+                    'city': 'New York, NY',
+                    'count': 0
+                },
+                {
+                    'city': 'Los Angeles, CA',
+                    'count': 0
+                },
+                {
+                    'city': 'Chicago, IL',
+                    'count': 0
+                },
+                {
+                    'city': 'Houston, TX',
+                    'count': 0
+                }]
+        }
+        else {
+            cityList = [
+                {
+                    'city': 'Tokyo, Japan',
+                    'count': 0
+                },
+                {
+                    'city': 'Yokohama',
+                    'count': 0
+                },
+                {
+                    'city': 'Osaka',
+                    'count': 0
+                },
+                {
+                    'city': 'Nagoya',
+                    'count': 0
+                }]
+        }
+
+
+        data.forEach(function (d) {
+            // var city = d.location.country.split(',')
+
+            cityList.forEach(function (c) {
+                if (d.location.country.includes(c.city))
+                    c.count++
+            })
+        })
+
+        console.log("DATA:::")
+        console.log(cityList)
+
+        var yScale = d3.scaleLinear().domain([0, d3.max(cityList, function (d) {
+            return d.count
+        })]).range([0, barHeight])
+
+        d3.select(".barChartGroup").selectAll('rect')
+            .data(cityList)
+            .transition()
+            .duration(500)
+            .attr('y', function (d) {
+                return barHeight - yScale(d.count)
+            })
+            .attr('height', function (d) {
+                return yScale(d.count)
             })
 
+        d3.selectAll(".numberClass")
+            .data(cityList)
+            .text(function (d) {
+                return d.count
+            })
+            .transition()
+            .duration(500)
+            .attr('y', function (d) {
+                return barHeight - yScale(d.count) - 2
+            })
 
     }
 }

@@ -95,4 +95,13 @@ d3.json("./data/news/words_frequency_ordered.json",function (data) {
     }
 
 
+    // word cloud
+    var string = ""
+    data[0].news_date[0].news_word.forEach(function (d) {
+        string +=d.key+" "
+    })
+    console.log(string)
+
+
+
 })

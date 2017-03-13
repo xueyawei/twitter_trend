@@ -38,16 +38,24 @@ body{
     width:100%;
 }
 .canvas{
-    width:70%;
+    width:100%;
     height:400px;
     clear: left;
-    float: left;
+    /*float: left;*/
 }
 .news_table{
     width: 30%;
     height: 400px;
+    float: left;
+}
+
+.wordCloud{
+    /*background-color: #116e99;*/
+    width: 70%;
+    height: 400px;
     float: right;
 }
+
 table{
     padding: 0px;
     margin: 0px;
@@ -73,9 +81,16 @@ option{
 .axis--x path,.axis--y path{
     display: none;
 }
+.axis--y text{
+    display: none;
+}
+.yText{
+    display: block !important;
+}
 .axis--x line,.axis--y line{
     stroke: rgb(185, 185, 185);
     stroke-dasharray: 5;
+    /*display: none;*/
 }
 .axis--x text,.axis--y text{
     font-family: 'Quicksand';

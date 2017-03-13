@@ -100,6 +100,37 @@ d3.queue()
         draw_line_twi(all_data[4],"#rompers",stroke_color[4],news);
 
 
+        //=================================
+        cloud()
+            .size([800,400])
+            .words([
+                "Hello", "world", "normally", "you", "want", "more", "words",
+                "than", "this"].map(function(d) {
+                return {text: d, size: 10 + Math.random() * 90, test: "haha"};
+            }))
+            .font("Impact")
+            .fontSize(function(d) { return d.size; })
+            .on("end", draw)
+            .start()
+
+        var cloudColor = d3.scaleOrdinal(d3.schemeCategory20)
+
+        function draw(data) {
+            d3.select('.wordCloud')
+                .append('svg')
+                .attr("width", layout.size()[0])
+                .attr("height", layout.size()[1])
+                .append("g")
+                .style("fill", function(d, i) { return cloudColor(i); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.text; });
+        }
+        //=================================
+
+
 
 
     });
@@ -150,6 +181,7 @@ function draw_all(twi){
         .attr("class", "axis axis--y")
         .call(yAxis)
         .append("text")
+        .attr("class","yText")
         .attr("fill", "#000")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
@@ -362,6 +394,8 @@ function draw_line_twi(twi,div,line_class,news) {
 
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
+
+
 
     var svg = d3.select(div)
         .append('svg')
@@ -734,3 +768,6 @@ function target_circle_append(data,id,twi_data,x,y,canvas){
 
 }
 
+function wordCloud() {
+
+}
