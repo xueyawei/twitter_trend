@@ -71,7 +71,8 @@ d3.queue()
     .defer(d3.json,'./data/parsed/jumper_shorts.json')
     .defer(d3.json,'./data/news/news1.json')
     .defer(d3.json,'./data/parsed/rompers.json')
-    .await(function(error,flight,off_s,culottes,jumper,news,rompers){
+    .defer(d3.json,"./data/news/words_frequency_ordered.json")
+    .await(function(error,flight,off_s,culottes,jumper,news,rompers,wordFrequncy){
 
 
 
@@ -93,43 +94,11 @@ d3.queue()
 
         draw_all(all_data);
 
-        draw_line_twi(all_data[0],"#gt",stroke_color[0],news);
-        draw_line_twi(all_data[1],"#off_s",stroke_color[1],news);
-        draw_line_twi(all_data[2],"#culottes",stroke_color[2],news);
-        draw_line_twi(all_data[3],"#jumper",stroke_color[3],news);
-        draw_line_twi(all_data[4],"#rompers",stroke_color[4],news);
-
-
-        //=================================
-        cloud()
-            .size([800,400])
-            .words([
-                "Hello", "world", "normally", "you", "want", "more", "words",
-                "than", "this"].map(function(d) {
-                return {text: d, size: 10 + Math.random() * 90, test: "haha"};
-            }))
-            .font("Impact")
-            .fontSize(function(d) { return d.size; })
-            .on("end", draw)
-            .start()
-
-        var cloudColor = d3.scaleOrdinal(d3.schemeCategory20)
-
-        function draw(data) {
-            d3.select('.wordCloud')
-                .append('svg')
-                .attr("width", layout.size()[0])
-                .attr("height", layout.size()[1])
-                .append("g")
-                .style("fill", function(d, i) { return cloudColor(i); })
-                .attr("text-anchor", "middle")
-                .attr("transform", function(d) {
-                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                })
-                .text(function(d) { return d.text; });
-        }
-        //=================================
-
+        draw_line_twi(all_data[0],"#gt",stroke_color[0],news,wordFrequncy);
+        draw_line_twi(all_data[1],"#off_s",stroke_color[1],news,wordFrequncy);
+        draw_line_twi(all_data[2],"#culottes",stroke_color[2],news,wordFrequncy);
+        draw_line_twi(all_data[3],"#jumper",stroke_color[3],news,wordFrequncy);
+        draw_line_twi(all_data[4],"#rompers",stroke_color[4],news,wordFrequncy);
 
 
 
@@ -388,7 +357,7 @@ function draw_all(twi){
 
 
 
-function draw_line_twi(twi,div,line_class,news) {
+function draw_line_twi(twi,div,line_class,news,wordFrequency) {
     var x = d3.scaleTime()
         .rangeRound([0, width]);
 
@@ -498,12 +467,14 @@ function draw_line_twi(twi,div,line_class,news) {
 
     target_circle_append(news,line_class.id,twi,x,y,g)
 
+
+
     g.append("circle")
         .datum(twi)
         .attr("id","target_circle_"+line_class.id)
 
     if(line_class.id!="id_04"){
-        news_table(news,line_class.id)
+        news_table(news,line_class.id,wordFrequency)
     }
 
 
@@ -517,7 +488,7 @@ function parse_date(date_str){
     return format(date_str)
 }
 
-function news_table(news,id){
+function news_table(news,id,wordFrequency){
     var div = d3.select("#"+id).select(".news_table");
 
     var header = div.append("div")
@@ -539,6 +510,13 @@ function news_table(news,id){
         }
     })
 
+    // initial word cloud
+    var firstWordCloudDate = this_news.news_date[0].date;
+    generateCloud(firstWordCloudDate,id,wordFrequency)
+
+
+    // ======================
+
     var table = div.append("div").append("table").append("tr").append("td").append("div")
         .style("height","320px")
         .style("width","100%")
@@ -554,7 +532,10 @@ function news_table(news,id){
             var target_value = this.value
             var select_id = d3.select(this).attr("select-id")
 
+            // word frequncy
+            generateCloud(target_value,select_id,wordFrequency)
 
+            // news table
             var target_news
             this_news.news_date.forEach(function (d) {
                 if(d.date==target_value){

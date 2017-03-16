@@ -49,12 +49,7 @@ body{
     float: left;
 }
 
-.wordCloud{
-    /*background-color: #116e99;*/
-    width: 70%;
-    height: 400px;
-    float: right;
-}
+
 
 table{
     padding: 0px;
@@ -147,4 +142,16 @@ option{
 .all_circle{
     stroke:black;
 }
+
+/*Word Cloud*/
+.wordCloud{
+    /*background-color: #116e99;*/
+    width: 70%;
+    height: 350px;
+    float: right;
+    /*padding: 50px 50px;*/
+    margin-bottom:50px;
+
+}
+
 
