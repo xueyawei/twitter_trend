@@ -155,3 +155,19 @@ option{
 }
 
 
+/* scroll scene*/
+#scrollIndicator{
+    position: fixed;
+    top:15%;
+    right:1%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+#scrollIndicator img{
+    width: 25px;
+}
+#scrollIndicator p {
+    margin: 0px;
+    font-weight: bold;
+}

@@ -71,7 +71,7 @@ d3.queue()
     .defer(d3.json,'./data/parsed/jumper_shorts.json')
     .defer(d3.json,'./data/news/news1.json')
     .defer(d3.json,'./data/parsed/rompers.json')
-    .defer(d3.json,"./data/news/words_frequency_ordered.json")
+    .defer(d3.json,"./data/news/filteredWord.json")
     .await(function(error,flight,off_s,culottes,jumper,news,rompers,wordFrequncy){
 
 
@@ -99,6 +99,8 @@ d3.queue()
         draw_line_twi(all_data[2],"#culottes",stroke_color[2],news,wordFrequncy);
         draw_line_twi(all_data[3],"#jumper",stroke_color[3],news,wordFrequncy);
         draw_line_twi(all_data[4],"#rompers",stroke_color[4],news,wordFrequncy);
+
+        scrollScene()
 
 
 
@@ -749,6 +751,4 @@ function target_circle_append(data,id,twi_data,x,y,canvas){
 
 }
 
-function wordCloud() {
 
-}
