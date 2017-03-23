@@ -1,6 +1,6 @@
 var brushMovingStat = false;
 
-
+var timerID = [];
 function brushAxis(start, end, ol, country) {
     var mList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var startDate = start
@@ -50,6 +50,7 @@ function brushAxis(start, end, ol, country) {
         .attr("y", margin.t - 5)
 
     var currentDate = new Date(start.getTime());
+    var startTime = new Date(start.getTime());
     currentDate.setMonth(currentDate.getMonth() + 1);
 
 
@@ -68,10 +69,10 @@ function brushAxis(start, end, ol, country) {
                 brushMovingStat = true;
 
 
-                var startPointOfCurrentBrush = new Date(currentDate.getTime()),
+                var startPointOfCurrentBrush = startTime,
                     endPointOfCurrentBrush = new Date(currentDate.getTime());
 
-                startPointOfCurrentBrush.setMonth(startPointOfCurrentBrush.getMonth() - 1);
+                // startPointOfCurrentBrush.setMonth(startPointOfCurrentBrush.getMonth() - 1);
 
                 startPointOfCurrentBrush = xScale(startPointOfCurrentBrush)
                 endPointOfCurrentBrush = xScale(endPointOfCurrentBrush)
@@ -103,10 +104,10 @@ function brushAxis(start, end, ol, country) {
     function movingBrush(brushEndDate) {
 
         setTimeout(function () {
-            var startPointOfCurrentBrush = new Date(currentDate.getTime()),
+            var startPointOfCurrentBrush = startTime,
                 endPointOfCurrentBrush = new Date(currentDate.getTime());
 
-            startPointOfCurrentBrush.setMonth(startPointOfCurrentBrush.getMonth() - 1);
+            // startPointOfCurrentBrush.setMonth(startPointOfCurrentBrush.getMonth() - 1);
 
             startPointOfCurrentBrush = xScale(startPointOfCurrentBrush)
             endPointOfCurrentBrush = xScale(endPointOfCurrentBrush)
@@ -137,21 +138,54 @@ function brushAxis(start, end, ol, country) {
 
 
     }
+    
+    d3.select("#clear")
+        .on("click",function () {
+            var id = window.setTimeout(null, 0);
+            while (id--) {
+                window.clearTimeout(id);
+            }
+
+            d3.select("#startMoving").select("button")
+                .text("Start")
+                .classed("btn-success", false)
+                .classed("btn-primary", true)
+
+            brushMovingStat = false;
+
+            currentDate = new Date(start.getTime());
+            startTime = new Date(start.getTime());
+            currentDate.setMonth(currentDate.getMonth() + 1);
+
+            d3.select(".brush")
+                .call(brush.move, null)
+        })
 
     function changeText() {
         var currentSelection = d3.event.selection
 
-        var x0 = xScale.invert(currentSelection[0]),
-            x1 = xScale.invert(currentSelection[1])
+        if (currentSelection == null) {
+            currentSelection = [0, width]
+            d3.select(".lText")
+                .text("")
+            d3.select(".rText")
+                .text("")
+        }
+        else{
+            var x0 = xScale.invert(currentSelection[0]),
+                x1 = xScale.invert(currentSelection[1])
 
 
-        d3.select(".lText")
-            .attr("x", currentSelection[0])
-            .text(mList[x0.getMonth()] + " " + x0.getDate() + ", " + x0.getFullYear())
+            d3.select(".lText")
+                .attr("x", currentSelection[0])
+                .text(mList[x0.getMonth()] + " " + x0.getDate() + ", " + x0.getFullYear())
 
-        d3.select(".rText")
-            .attr("x", currentSelection[1])
-            .text(mList[x1.getMonth()] + " " + x1.getDate() + ", " + x1.getFullYear())
+            d3.select(".rText")
+                .attr("x", currentSelection[1])
+                .text(mList[x1.getMonth()] + " " + x1.getDate() + ", " + x1.getFullYear())
+        }
+
+
 
 
     }

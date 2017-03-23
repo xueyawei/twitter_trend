@@ -57,6 +57,13 @@ body{
     width: 30%;
     height: 400px;
     float: left;
+    margin-left: 2%;
+}
+.relatedNewsText{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    margin-left: 0;
 }
 
 
@@ -65,10 +72,10 @@ table{
     padding: 0px;
     margin: 0px;
 }
-select{
+/*select{*/
 
-    font-weight: bold;
-}
+    /*font-weight: bold;*/
+/*}*/
 option{
     font-weight: bold;
 }
@@ -156,7 +163,7 @@ option{
 /*Word Cloud*/
 .wordCloud{
     /*background-color: #116e99;*/
-    width: 70%;
+    width: 68%;
     height: 350px;
     float: right;
     /*padding: 50px 50px;*/
@@ -181,3 +188,29 @@ option{
     margin: 0px;
     font-weight: bold;
 }
+
+/*fs events*/
+line.fsEvent, text.fsEvent{
+    stroke: #9b9b9b;
+
+}
+
+/* select style*/
+select {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: 8px 8px, 8px 8px, 30px 30px, 1px 30px;
+    background-image: repeating-linear-gradient(225deg, rgb(105, 123, 149) 0%, rgb(105, 123, 149) 50%, transparent 50%, transparent 100%),
+    repeating-linear-gradient(135deg, rgb(105, 123, 149) 0%, rgb(105, 123, 149) 50%, transparent 50%, transparent 100%),
+    linear-gradient(#FFFFFF 0%, #F8F9Fd, #EFFAFA 100%),
+    repeating-linear-gradient( rgb(191, 204, 220) 0%, rgb(191, 204, 220) 100%);
+    background-position: 175px 10px, 183px 10px, right top, 167px top;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+/*======================================*/

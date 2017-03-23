@@ -1,9 +1,9 @@
-html, body, div, ul, li, svg {
+html, body, div, ul, li, svg ,text{
     margin: 0;
     padding: 0;
     list-style: none;
     /*font-family: 'Josefin Sans', sans-serif;*/
-    font-family: "Bodoni 72";
+    font-family: "Roboto",sans-serif !important;
 }
 
 /*------------Global-------------*/
@@ -34,7 +34,12 @@ body {
 h1, h3 {
     margin-left: 20px;
 }
-
+h1{
+  font-family: "Bodoni 72",serif;
+}
+h3{
+  font-family: "Roboto",sans-serif;
+}
 /*-----------Brush---------------*/
 .brush .extent {
     fill: #2A577A;

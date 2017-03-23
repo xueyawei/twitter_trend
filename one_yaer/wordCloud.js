@@ -65,9 +65,19 @@ function generateCloud(date, selectedID, wordFrequency) {
     })
 
     // word cloud options
+    var cloudColor = "black";
+    for(var i = 0; i<stroke_color.length;i++){
+        if(stroke_color[i].id == selectedID){
+            cloudColor = stroke_color[i].color
+            break
+        }
+
+    }
+
+
     var options = {
         list: wordCloudFormatList,
-        color: '#90c9e8',
+        color: cloudColor,
         fontFamily: "Roboto"
     }
     // generate word cloud

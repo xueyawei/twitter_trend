@@ -14,7 +14,7 @@ function scrollScene() {
                 .transition()
                 .duration(500)
                 .style("opacity","0")
-            console.log("out")
+
         })
         .on("enter",function (event) {
             d3.select("#scrollIndicator")

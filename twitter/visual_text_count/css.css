@@ -1,7 +1,8 @@
-html,body,div,ul,li,svg{
+html,body,div,ul,li,svg,text{
     margin:0;
     padding:0;
     list-style:none;
+    font-family: "Roboto",sans-serif;
 }
 
 /*------------Global-------------*/
@@ -82,7 +83,6 @@ td{
 }
 table{
     color: #000000;
-    font-family: 'Helvetica Neue', Helvetica;
     font-weight: 400;
     padding: 20px;
     width: 280px;
