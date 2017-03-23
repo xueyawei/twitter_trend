@@ -9,6 +9,49 @@ function brushAxis(start, end, ol, country) {
     var xAxis = d3.axisBottom(xScale)
         .ticks(10);
 
+    // ===== events info =====
+    var fashionEvents = [
+        {
+            date: new Date("Nov. 22, 2015"),
+            fsEvent: "American Music Awards"
+        },
+        {
+            date: new Date("Jan. 6, 2016"),
+            fsEvent: "People’s Choice Awards"
+        },
+        {
+            date: new Date("Jan. 10, 2016"),
+            fsEvent: "Golden Globes"
+        },
+        {
+            date: new Date("Feb. 15, 2016"),
+            fsEvent: "Grammys"
+        },
+        {
+            date: new Date("Feb. 28, 2016"),
+            fsEvent: "Academy Awards (Oscars)"
+        },
+        {
+            date: new Date("April 3, 2016"),
+            fsEvent: "iHeartRadio Music Awards"
+        },
+        {
+            date: new Date("April 10, 2016"),
+            fsEvent: "MTV Movie Awards"
+        },
+        {
+            date: new Date("Aug. 28, 2016"),
+            fsEvent: "MTV Video Music Awards"
+        },
+        {
+            date: new Date("Sep. 18, 2016"),
+            fsEvent: "Primetime Emmy Awards"
+        }
+
+    ];
+
+
+
     var brush = d3.brushX()
         .on("end", brushed)
         .on("brush", changeText);
@@ -16,9 +59,38 @@ function brushAxis(start, end, ol, country) {
     var brushTimeline = d3.select("#timeline1")
         .append("svg")
         .attr("width", width + margin.l + margin.r)
-        .attr("height", "100px")
+        .attr("height", "250px")
         .append("g")
         .attr("transform", "translate(" + margin.l + "," + margin.t + ")");
+
+    var fsEvent = brushTimeline.append("g")
+        .attr("class","fsEventContainer")
+        .selectAll(".fsEvent")
+        .data(fashionEvents)
+        .enter()
+
+    fsEvent.append("line")
+        .attr("class","fsEvent")
+        .attr("x1",function (d) {
+            return xScale(d.date)
+        })
+        .attr("x2",function (d) {
+            return xScale(d.date)
+        })
+        .attr("y1",0)
+        .attr("y2",192-14)
+
+    fsEvent.append("text")
+        .attr("class","fsEvent")
+        .attr("x",function (d) {
+            return xScale(d.date)-2
+        })
+        .attr("y",function (d,i) {
+            return i*16+50+14
+        })
+        .text(function (d) {
+            return d.fsEvent
+        })
 
     brushTimeline.append("g")
         .attr("class", "x axis")
@@ -29,8 +101,10 @@ function brushAxis(start, end, ol, country) {
         .attr("transform", "translate(0,-50)")
         .attr("class", "brush")
         .call(brush)
+
+    d3.select(".brush")
         .selectAll("rect")
-        .attr("height", "100");
+        .attr("height", "100px");
 
     // d3.select(".extent")
     //     .attr("transform", "translate(0,25)")
@@ -138,9 +212,9 @@ function brushAxis(start, end, ol, country) {
 
 
     }
-    
+
     d3.select("#clear")
-        .on("click",function () {
+        .on("click", function () {
             var id = window.setTimeout(null, 0);
             while (id--) {
                 window.clearTimeout(id);
@@ -171,7 +245,7 @@ function brushAxis(start, end, ol, country) {
             d3.select(".rText")
                 .text("")
         }
-        else{
+        else {
             var x0 = xScale.invert(currentSelection[0]),
                 x1 = xScale.invert(currentSelection[1])
 
@@ -184,8 +258,6 @@ function brushAxis(start, end, ol, country) {
                 .attr("x", currentSelection[1])
                 .text(mList[x1.getMonth()] + " " + x1.getDate() + ", " + x1.getFullYear())
         }
-
-
 
 
     }
@@ -226,11 +298,11 @@ function brushAxis(start, end, ol, country) {
                     .data(dataset)
                     .enter();
 
-                var colorRange = ['#E7EDF1','#105378']
+                var colorRange = ['#E7EDF1', '#105378']
 
                 var colorScale = d3.scaleLog().range(colorRange)
 
-                colorScale.domain(d3.extent(dataset,function (d) {
+                colorScale.domain(d3.extent(dataset, function (d) {
                     return d.main.number
                 }))
 
@@ -244,7 +316,7 @@ function brushAxis(start, end, ol, country) {
                         return d.y
                     })
                     .attr('r', ol[2])
-                    .style("fill",function (d) {
+                    .style("fill", function (d) {
                         return colorScale(d.main.number)
                     })
 

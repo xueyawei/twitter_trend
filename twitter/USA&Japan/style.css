@@ -1,9 +1,9 @@
-html, body, div, ul, li, svg ,text{
+html, body, div, ul, li, svg, text {
     margin: 0;
     padding: 0;
     list-style: none;
     /*font-family: 'Josefin Sans', sans-serif;*/
-    font-family: "Roboto",sans-serif !important;
+    font-family: "Roboto", sans-serif !important;
 }
 
 /*------------Global-------------*/
@@ -34,17 +34,24 @@ body {
 h1, h3 {
     margin-left: 20px;
 }
-h1{
-  font-family: "Bodoni 72",serif;
+
+h1 {
+    font-family: "Bodoni 72", serif;
+    font-weight: bold;
 }
-h3{
-  font-family: "Roboto",sans-serif;
+
+h3 {
+    font-family: "Roboto", sans-serif;
 }
+
 /*-----------Brush---------------*/
 .brush .extent {
     fill: #2A577A;
     fill-opacity: .3;
     shape-rendering: crispEdges;
+}
+.brush .selection{
+    height: 100px;
 }
 
 .axis .domain {
@@ -79,42 +86,106 @@ h3{
 #startMoving {
     text-align: center;
 }
-#startMoving button{
+
+#startMoving button {
     font-size: 24px;
     padding: 6px 24px;
     width: 180px;
 }
 
 /*.dot{*/
-    /*fill:#D64A50*/
+/*fill:#D64A50*/
 
 /*}*/
 
-path{
+path {
     fill: #D9D9D9;
     stroke: white;
 }
-.numberClass{
+
+.numberClass {
     stroke: #105378;
     text-anchor: middle;
     font-size: 24px;
 }
-.cityText{
+
+.cityText {
     stroke: #105378;
 
 }
 
-.btn-primary{
-    background-color:#105378;
+.btn-primary {
+    background-color: #105378;
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: #116e99 !important;
 }
-.btn-success{
+
+.btn-success {
 
     background-color: #ffa902 !important;
     border-color: white !important;
 }
-.btn-success:focus{
+
+.btn-success:focus {
     border-color: white !important;
+}
+
+/* footer */
+.footer {
+    clear: both;
+    margin-right: 3%;
+    margin-bottom: 2%;
+    height: 250px;
+    margin-top: 3%;
+}
+
+/*footer text*/
+.footerText h2 {
+    font-family: "Bodoni 72", serif;
+    font-weight: bold;
+}
+
+.footerText p {
+    font-family: "Roboto", sans-serif;
+}
+
+.footerText h2, .footerText p {
+    margin-left: 0px;
+}
+
+.footerText {
+    float: right;
+
+}
+
+/*footer line*/
+.footerLine {
+    height: 220px;
+    width: 10px;
+    float: right;
+    background-color: #000000;
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+/* fsEvent*/
+line.fsEvent{
+    stroke: #c3c3c3;
+    stroke-width: 2px;
+
+}
+text.fsEvent{
+    text-anchor: end;
+    fill: #9a9a9a;
+}
+.fsEvent{
+    pointer-events: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
