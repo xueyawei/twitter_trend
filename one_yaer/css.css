@@ -197,7 +197,7 @@ line.fsEvent, text.fsEvent{
 
 /* select style*/
 select {
-    border: solid 2px #11668f;
+    border: solid 3px #11668f;
     border-radius: 5px;
     font-size: 18px;
     height: 28px;
