@@ -2,7 +2,8 @@ html, body, div, ul, li, svg {
     margin: 0;
     padding: 0;
     list-style: none;
-    font-family: 'Josefin Sans', sans-serif;
+    /*font-family: 'Josefin Sans', sans-serif;*/
+    font-family: "Bodoni 72";
 }
 
 /*------------Global-------------*/

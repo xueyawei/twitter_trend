@@ -1,7 +1,8 @@
-html,body,div,ul,li,svg{
+html,body,div,ul,li,svg,text{
     margin:0;
     padding:0;
     list-style:none;
+    font-family: 'Roboto', sans-serif;
 }
 
 /*------------Global-------------*/
@@ -89,7 +90,7 @@ body{
 }
 
 li{
-    font-family: sans-serif;
+    /*font-family: sans-serif;*/
     font-weight: bold;
 
 }

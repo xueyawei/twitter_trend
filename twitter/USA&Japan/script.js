@@ -110,22 +110,22 @@ function listCity(data) {
     var cityList = [
         {
             'city': 'New York, NY',
-            "color": "#D2E9F5",
+            "color": "#D9D9D9",
             'count': 0
         },
         {
             'city': 'Los Angeles, CA',
-            "color": "#ffc799",
+            "color": "#D9D9D9",
             'count': 0
         },
         {
             'city': 'Chicago, IL',
-            "color": "#cfffc0",
+            "color": "#D9D9D9",
             'count': 0
         },
         {
             'city': 'Houston, TX',
-            "color": "#ffdc99",
+            "color": "#D9D9D9",
             'count': 0
         }]
 

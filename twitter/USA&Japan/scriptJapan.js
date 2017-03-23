@@ -146,22 +146,22 @@ function listCity(data) {
     var cityList = [
         {
             'city': 'Tokyo, Japan',
-            "color": "#D2E9F5",
+            "color": "#D9D9D9",
             'count': 0
         },
         {
             'city': 'Yokohama',
-            "color": "#ffc799",
+            "color": "#D9D9D9",
             'count': 0
         },
         {
             'city': 'Osaka',
-            "color": "#cfffc0",
+            "color": "#D9D9D9",
             'count': 0
         },
         {
             'city': 'Nagoya',
-            "color": "#ffdc99",
+            "color": "#D9D9D9",
             'count': 0
         }]
 

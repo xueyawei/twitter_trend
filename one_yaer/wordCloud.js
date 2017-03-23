@@ -67,7 +67,8 @@ function generateCloud(date, selectedID, wordFrequency) {
     // word cloud options
     var options = {
         list: wordCloudFormatList,
-        color: '#90c9e8'
+        color: '#90c9e8',
+        fontFamily: "Roboto"
     }
     // generate word cloud
     WordCloud(canvas.node(), options)
