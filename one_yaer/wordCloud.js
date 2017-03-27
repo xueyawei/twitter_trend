@@ -57,7 +57,7 @@ function generateCloud(date, selectedID, wordFrequency) {
     })
 
     var minFontSizeSupport = WordCloud.minFontSize
-    var maxFontSize = cloudW * 0.2
+    var maxFontSize = cloudW * 0.13
 
     var cloudScale = d3.scaleLinear().domain(dataExtent).range([minFontSizeSupport, maxFontSize])
     wordCloudFormatList.forEach(function (d) {
@@ -76,6 +76,7 @@ function generateCloud(date, selectedID, wordFrequency) {
 
 
     var options = {
+        drawOutOfBound:false,
         list: wordCloudFormatList,
         color: cloudColor,
         fontFamily: "Roboto"

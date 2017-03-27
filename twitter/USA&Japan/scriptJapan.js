@@ -4,15 +4,17 @@ var margin = {t: 50, l: 50, b: 50, r: 50},
 
 console.log(width + " " + document.getElementById('map').clientHeight)
 
-
+scrollScene()
 var svg = d3.select('.canvas')
     .append('svg')
     .attr("class", "mainSvg")
     .attr('width', width + margin.l + margin.r)
     .attr('height', height + margin.t + margin.b);
 
+
+var introPos = d3.select(".introText").node().getBoundingClientRect()
 d3.select(".mainSvg").append("text")
-    .attr("x", 20)
+    .attr("x", introPos.left)
     .attr("y", margin.l)
     .text("Bomber Jacket + Flight Jacket")
 

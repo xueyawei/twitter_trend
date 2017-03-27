@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Users Hashtags</title>
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <link href="css.css" rel="stylesheet"/>
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--TODO change icon-->
+    <link rel="icon" href="../../Favicon.png">
+    <!-- Bootstrap core CSS -->
+    <link href="../../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Users Hashtags</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="css.css" rel="stylesheet"/>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand navHeader" href="../../index.html"><img src="../../Favicon.png" class="favicon">Visualizing Fashion Buzz</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="../../index.html">Home</a></li>
+                    <li class=""><a href="../../one_yaer/index.html">The Stories Behind Fashion Buzz</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Spreading of the Fashion Buzz <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../twitter/USA&Japan/usa.html">The U.S. Map</a></li>
+                            <li><a href="../../twitter/USA&Japan/japan.html">Japan Map</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Progress <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../twitter/user_hashtags/index.html">Users Hashtags with #fashion #style</a></li>
+                            <li class="active"><a href="#">Users Hashtags with fashion ootd</a></li>
+                            <li class=""><a href="../../twitter/brands_hashtags/index.html" >Brands Hashtags</a></li>
+                            <li><a href="../../twitter/visual_text_count/index.html" >Words Frequency of 20 Brands</a></li>
+                            <li><a href="../../google/fashion_trend/index.html" >Google Trend - Fashion - Worldwide</a></li>
+                            <li><a href="../../google/fashion%20trend_trend/index.html" >Google Trend - Fashion Trends - US</a></li>
+                            <li class=""><a href="../../GooTwi/index.html" >Flight Jacket Trend - Google, Twitter</a></li>
+                            <li><a href="../../one_yaer/words.html" >Buzz Frequency</a></li>
+                            <li><a href="../../twitter/map/index.html" >Tweet Map</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
     <div id="container" class="main">
         <div id="user" class="canvas">
 
@@ -17,13 +69,15 @@
         </div>
 
 
-
-
-
     </div>
 
-
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="script.js"></script>
-    </body>
+</body>
 </html>

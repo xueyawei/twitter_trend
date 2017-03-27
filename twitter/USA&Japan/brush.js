@@ -1,4 +1,6 @@
 var brushMovingStat = false;
+var movingSpeed = 10000;
+var restartStat = true;
 
 var timerID = [];
 function brushAxis(start, end, ol, country) {
@@ -9,8 +11,49 @@ function brushAxis(start, end, ol, country) {
     var xAxis = d3.axisBottom(xScale)
         .ticks(10);
 
+
     // ===== events info =====
     var fashionEvents = [
+        {
+            date: new Date("November 23, 2014"),
+            fsEvent: "American Music Awards"
+        },
+        {
+            date: new Date("Jan. 7, 2015"),
+            fsEvent: "People’s Choice Awards"
+        },
+        {
+            date: new Date("Jan. 11, 2015"),
+            fsEvent: "Golden Globes"
+        },
+        {
+            date: new Date("Jan. 15, 2015"),
+            fsEvent: "Critics’ Choice Awards"
+        },
+        {
+            date: new Date("Feb. 8, 2015"),
+            fsEvent: "Grammys"
+        },
+        {
+            date: new Date("February 22, 2015"),
+            fsEvent: "Academy Awards (Oscars)"
+        },
+        {
+            date: new Date("March 29, 2015"),
+            fsEvent: "iHeartRadio Music Awards"
+        },
+        {
+            date: new Date("April 12, 2015"),
+            fsEvent: "MTV Movie Awards"
+        },
+        {
+            date: new Date("Aug. 30, 2015"),
+            fsEvent: "MTV Video Music Awards"
+        },
+        {
+            date: new Date("September 20, 2015"),
+            fsEvent: "Primetime Emmy Awards"
+        },
         {
             date: new Date("Nov. 22, 2015"),
             fsEvent: "American Music Awards"
@@ -51,45 +94,54 @@ function brushAxis(start, end, ol, country) {
     ];
 
 
-
     var brush = d3.brushX()
-        .on("end", brushed)
-        .on("brush", changeText);
+        .on("brush.moving", brushed)
+        .on("brush.text", changeText);
 
     var brushTimeline = d3.select("#timeline1")
         .append("svg")
         .attr("width", width + margin.l + margin.r)
-        .attr("height", "250px")
+        .attr("height", "500px")
         .append("g")
         .attr("transform", "translate(" + margin.l + "," + margin.t + ")");
 
     var fsEvent = brushTimeline.append("g")
-        .attr("class","fsEventContainer")
+        .attr("class", "fsEventContainer")
         .selectAll(".fsEvent")
         .data(fashionEvents)
         .enter()
 
     fsEvent.append("line")
-        .attr("class","fsEvent")
-        .attr("x1",function (d) {
+        .attr("class", "fsEvent")
+        .attr("x1", function (d) {
             return xScale(d.date)
         })
-        .attr("x2",function (d) {
+        .attr("x2", function (d) {
             return xScale(d.date)
         })
-        .attr("y1",0)
-        .attr("y2",192-14)
+        .attr("y1", 0)
+        .attr("y2", function (d,i) {
+            return i*16+50+16
+        })
 
     fsEvent.append("text")
-        .attr("class","fsEvent")
-        .attr("x",function (d) {
-            return xScale(d.date)-2
+        .attr("class", "fsEvent")
+        .attr("x", function (d,i) {
+            if(i==0)
+                return xScale(d.date) + 2
+            return xScale(d.date) - 2
         })
-        .attr("y",function (d,i) {
-            return i*16+50+14
+        .attr("y", function (d, i) {
+            return i * 16 + 50 + 14
         })
         .text(function (d) {
             return d.fsEvent
+        })
+        .style("text-anchor",function (d,i) {
+            if(i==0)
+                return "start"
+            else
+                return "end"
         })
 
     brushTimeline.append("g")
@@ -127,53 +179,144 @@ function brushAxis(start, end, ol, country) {
     var startTime = new Date(start.getTime());
     currentDate.setMonth(currentDate.getMonth() + 1);
 
-
-    d3.select("#startMoving").select("button")
+    d3.select("#sButton")
         .on("click", function () {
-            var brushEndDate = new Date(end.getTime())
-            brushEndDate.setMonth(brushEndDate.getMonth() + 1)
-            var timeoutID = [];
-
             if (!brushMovingStat) {
-                d3.select("#startMoving").select("button")
+                d3.select("#sButton")
                     .text("Running...")
                     .classed("btn-success", true)
                     .classed("btn-primary", false)
 
                 brushMovingStat = true;
 
+                if (restartStat) {
 
-                var startPointOfCurrentBrush = startTime,
-                    endPointOfCurrentBrush = new Date(currentDate.getTime());
+                    restartStat = false;
+                    d3.select(".brush")
+                        .call(brush.move, [0, 1])
 
-                // startPointOfCurrentBrush.setMonth(startPointOfCurrentBrush.getMonth() - 1);
+                    d3.select(".brush")
+                        .transition("brushT")
+                        .duration(movingSpeed)
+                        .ease(d3.easeLinear)
+                        .on("end", function () {
+                            brushMovingStat = false;
 
-                startPointOfCurrentBrush = xScale(startPointOfCurrentBrush)
-                endPointOfCurrentBrush = xScale(endPointOfCurrentBrush)
+                            d3.select("#sButton")
+                                .text("Start")
+                                .classed("btn-success", false)
+                                .classed("btn-primary", true)
 
-                d3.select(".brush")
-                    .call(brush)
-                    .call(brush.move, [startPointOfCurrentBrush, endPointOfCurrentBrush])
+                            if (d3.brushSelection(d3.select(".brush").node())[1] == xScale(end))
+                                restartStat = true;
 
-                currentDate.setMonth(currentDate.getMonth() + 1);
+                        })
+                        .call(brush.move, [0, xScale(end)])
 
-                movingBrush(brushEndDate)
+
+                }
+                else {
+                    var currSelection = d3.brushSelection(d3.select(".brush").node())
+                    console.log(currSelection)
+
+                    var transitionTiming = (xScale(end) - currSelection[1]) / xScale(end) * movingSpeed
+
+
+                    d3.select(".brush")
+                        .call(brush.move, [0, currSelection[1]])
+
+                    d3.select(".brush")
+                        .transition("brushT")
+                        .duration(transitionTiming)
+                        .ease(d3.easeLinear)
+                        .on("end", function () {
+                            brushMovingStat = false;
+
+                            d3.select("#sButton")
+                                .text("Start")
+                                .classed("btn-success", false)
+                                .classed("btn-primary", true)
+
+                            if (d3.brushSelection(d3.select(".brush").node())[1] == xScale(end))
+                                restartStat = true;
+                        })
+                        .call(brush.move, [0, xScale(end)])
+
+
+                }
+
 
             }
             else {
-                var id = window.setTimeout(null, 0);
-                while (id--) {
-                    window.clearTimeout(id);
-                }
-                d3.select("#startMoving").select("button")
+                d3.select(".brush")
+                    .interrupt("brushT")
+                brushMovingStat = false;
+
+                d3.select("#sButton")
                     .text("Start")
                     .classed("btn-success", false)
                     .classed("btn-primary", true)
-                brushMovingStat = false;
             }
 
-
         })
+
+    // d3.select("#startMoving")
+    //     .append("button")
+    //     .text("OK")
+    //     .on("click", function () {
+    //         if (brushMovingStat == true) {
+    //             d3.select(".brush")
+    //                 .interrupt("brushT")
+    //         }
+    //     })
+
+
+    // d3.select("#startMoving").select("button")
+    //     .on("click", function () {
+    //         var brushEndDate = new Date(end.getTime())
+    //         brushEndDate.setMonth(brushEndDate.getMonth() + 1)
+    //         var timeoutID = [];
+    //
+    //         if (!brushMovingStat) {
+    //             d3.select("#startMoving").select("button")
+    //                 .text("Running...")
+    //                 .classed("btn-success", true)
+    //                 .classed("btn-primary", false)
+    //
+    //             brushMovingStat = true;
+    //
+    //
+    //             var startPointOfCurrentBrush = startTime,
+    //                 endPointOfCurrentBrush = new Date(currentDate.getTime());
+    //
+    //             // startPointOfCurrentBrush.setMonth(startPointOfCurrentBrush.getMonth() - 1);
+    //
+    //             startPointOfCurrentBrush = xScale(startPointOfCurrentBrush)
+    //             endPointOfCurrentBrush = xScale(endPointOfCurrentBrush)
+    //
+    //             d3.select(".brush")
+    //                 .call(brush)
+    //                 .call(brush.move, [startPointOfCurrentBrush, endPointOfCurrentBrush])
+    //
+    //             currentDate.setMonth(currentDate.getMonth() + 1);
+    //
+    //             movingBrush(brushEndDate)
+    //
+    //         }
+    //         else {
+    //             var id = window.setTimeout(null, 0);
+    //             while (id--) {
+    //                 window.clearTimeout(id);
+    //             }
+    //             d3.select("#startMoving").select("button")
+    //                 .text("Start")
+    //                 .classed("btn-success", false)
+    //                 .classed("btn-primary", true)
+    //             brushMovingStat = false;
+    //         }
+    //
+    //
+    //     })
 
     function movingBrush(brushEndDate) {
 
@@ -213,24 +356,25 @@ function brushAxis(start, end, ol, country) {
 
     }
 
+
     d3.select("#clear")
         .on("click", function () {
-            var id = window.setTimeout(null, 0);
-            while (id--) {
-                window.clearTimeout(id);
-            }
+            // var id = window.setTimeout(null, 0);
+            // while (id--) {
+            //     window.clearTimeout(id);
+            // }
 
-            d3.select("#startMoving").select("button")
+            d3.select("#sButton")
                 .text("Start")
                 .classed("btn-success", false)
                 .classed("btn-primary", true)
 
             brushMovingStat = false;
+            restartStat = true;
 
-            currentDate = new Date(start.getTime());
-            startTime = new Date(start.getTime());
-            currentDate.setMonth(currentDate.getMonth() + 1);
 
+            d3.select(".brush")
+                .interrupt("brushT")
             d3.select(".brush")
                 .call(brush.move, null)
         })
@@ -274,71 +418,116 @@ function brushAxis(start, end, ol, country) {
         }
         var x0 = xScale.invert(currentSelection[0]),
             x1 = xScale.invert(currentSelection[1])
-        console.log(ol)
+
         var dataset = overlay(ol[0].filter(function (d) {
             return (d.timestamp >= x0 && d.timestamp <= x1)
         }), ol[1], ol[2])
 
 
-        console.log("Filtered Data:")
-        console.log(dataset)
-
-        d3.select('#circleGroup')
-            .transition()
-            .duration(300)
-            .on('end', function (d, i) {
-                d3.selectAll('.dot,.dotText')
-                    .remove()
-
-                console.log("QQ")
+        d3.selectAll('.dot,.dotText')
+            .remove()
 
 
-                var entered = d3.select('#circleGroup')
-                    .selectAll(".dot")
-                    .data(dataset)
-                    .enter();
+        var entered = d3.select('#circleGroup')
+            .selectAll(".dot")
+            .data(dataset)
+            .enter();
 
-                var colorRange = ['#E7EDF1', '#105378']
+        var colorRange = ['#E7EDF1', '#105378']
 
-                var colorScale = d3.scaleLog().range(colorRange)
+        var colorScale = d3.scaleLog().range(colorRange)
 
-                colorScale.domain(d3.extent(dataset, function (d) {
-                    return d.main.number
-                }))
+        colorScale.domain(d3.extent(dataset, function (d) {
+            return d.main.number
+        }))
 
-                entered
-                    .append('circle')
-                    .attr('class', 'dot')
-                    .attr('cx', function (d) {
-                        return d.x
-                    })
-                    .attr('cy', function (d) {
-                        return d.y
-                    })
-                    .attr('r', ol[2])
-                    .style("fill", function (d) {
-                        return colorScale(d.main.number)
-                    })
-
-                entered
-                    .append('text')
-                    .text(function (d) {
-                        return d.main.number
-                    })
-                    .attr('class', 'dotText')
-                    .attr('x', function (d) {
-                        return d.x - 5
-                    })
-                    .attr('y', function (d) {
-                        return d.y + 5
-                    })
-                d3.select('#circleGroup')
-                    .transition()
-                    .duration(300)
-                    .style('opacity', 1)
-
+        entered
+            .append('circle')
+            .attr('class', 'dot')
+            .attr('cx', function (d) {
+                return d.x
             })
-            .style("opacity", 0)
+            .attr('cy', function (d) {
+                return d.y
+            })
+            .attr('r', ol[2])
+            .style("fill", function (d) {
+                return colorScale(d.main.number)
+            })
+
+        entered
+            .append('text')
+            .text(function (d) {
+                return d.main.number
+            })
+            .attr('class', 'dotText')
+            .attr('x', function (d) {
+                return d.x - 5
+            })
+            .attr('y', function (d) {
+                return d.y + 5
+            })
+        // d3.select('#circleGroup')
+        //     .transition()
+        //     .duration(300)
+        //     .style('opacity', 1)
+
+        // d3.select('#circleGroup')
+        //     .transition()
+        //     .duration(300)
+        //     .on('end', function (d, i) {
+        //         d3.selectAll('.dot,.dotText')
+        //             .remove()
+        //
+        //         console.log("QQ")
+        //
+        //
+        //         var entered = d3.select('#circleGroup')
+        //             .selectAll(".dot")
+        //             .data(dataset)
+        //             .enter();
+        //
+        //         var colorRange = ['#E7EDF1', '#105378']
+        //
+        //         var colorScale = d3.scaleLog().range(colorRange)
+        //
+        //         colorScale.domain(d3.extent(dataset, function (d) {
+        //             return d.main.number
+        //         }))
+        //
+        //         entered
+        //             .append('circle')
+        //             .attr('class', 'dot')
+        //             .attr('cx', function (d) {
+        //                 return d.x
+        //             })
+        //             .attr('cy', function (d) {
+        //                 return d.y
+        //             })
+        //             .attr('r', ol[2])
+        //             .style("fill", function (d) {
+        //                 return colorScale(d.main.number)
+        //             })
+        //
+        //         entered
+        //             .append('text')
+        //             .text(function (d) {
+        //                 return d.main.number
+        //             })
+        //             .attr('class', 'dotText')
+        //             .attr('x', function (d) {
+        //                 return d.x - 5
+        //             })
+        //             .attr('y', function (d) {
+        //                 return d.y + 5
+        //             })
+        //         d3.select('#circleGroup')
+        //             .transition()
+        //             .duration(300)
+        //             .style('opacity', 1)
+        //
+        //     })
+        //     .style("opacity", 0)
 
 
         // d3.selectAll(".dot")
@@ -408,8 +597,6 @@ function brushAxis(start, end, ol, country) {
             })
         })
 
-        console.log("DATA:::")
-        console.log(cityList)
 
         var yScale = d3.scaleLinear().domain([0, d3.max(cityList, function (d) {
             return d.count
@@ -418,7 +605,7 @@ function brushAxis(start, end, ol, country) {
         d3.select(".barChartGroup").selectAll('rect')
             .data(cityList)
             .transition()
-            .duration(500)
+            .duration(movingSpeed / 100)
             .attr('y', function (d) {
                 return barHeight - yScale(d.count)
             })
@@ -432,7 +619,7 @@ function brushAxis(start, end, ol, country) {
                 return d.count
             })
             .transition()
-            .duration(500)
+            .duration(movingSpeed / 100)
             .attr('y', function (d) {
                 return barHeight - yScale(d.count) - 2
             })

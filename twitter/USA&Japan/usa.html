@@ -1,22 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>USA Tweets Map</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--TODO change icon-->
+    <link rel="icon" href="../../Favicon.png">
+    <!-- Bootstrap core CSS -->
+    <link href="../../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Spreading of the Fashion Buzz - The U.S. Map</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand navHeader" href="../../index.html"><img src="../../Favicon.png" class="favicon">Visualizing Fashion Buzz</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="../../index.html">Home</a></li>
+                    <li class=""><a href="../../one_yaer/index.html">The Stories Behind Fashion Buzz</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Spreading of the Fashion Buzz <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="active"><a href="#">The U.S. Map</a></li>
+                            <li><a href="../../twitter/USA&Japan/japan.html">Japan Map</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Progress <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../twitter/user_hashtags/index.html">Users Hashtags with #fashion #style</a></li>
+                            <li><a href="../../twitter/ootd/index.html">Users Hashtags with fashion ootd</a></li>
+                            <li><a href="../../twitter/brands_hashtags/index.html" >Brands Hashtags</a></li>
+                            <li><a href="../../twitter/visual_text_count/index.html" >Words Frequency of 20 Brands</a></li>
+                            <li><a href="../../google/fashion_trend/index.html" >Google Trend - Fashion - Worldwide</a></li>
+                            <li><a href="../../google/fashion%20trend_trend/index.html" >Google Trend - Fashion Trends - US</a></li>
+                            <li><a href="../../GooTwi/index.html" >Flight Jacket Trend - Google, Twitter</a></li>
+                            <li><a href="../../one_yaer/words.html" >Buzz Frequency</a></li>
+                            <li><a href="../../twitter/map/index.html" >Tweet Map</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
     <div id="container">
         <h1>Spreading of the Fashion Buzz</h1>
-        <h3>USA Map</h3>
+        <h3>The U.S. Map</h3>
+        <p class="introText">This project  create a  bubble map to show the cultural impact of fashion trends in different countries or regions and how the propagation of the trends shows into the map. According to the effect of Flight/Bomber Jacket through the research and history, the project was moving to focus on only the United States and Japan. The maps show the recent two years’ data of people’s tweets about flight/Bomber Jacket and also list the number of the tweets in 4 major cities. The interaction of this map is by click the “Start” button and see dynamic effects of how trends spread into whole counties.
+            <br>The results of those maps are evident, the involve of social media truly make the fashion buzz spread quickly, especially in major cities. Even Twitter users in Japan mostly tweet in Japanese, the data is based on English, the spreading of the buzz also could display in this map easily.</p>
+
+        <div id="scrollIndicator">
+            <p>Scroll Down</p>
+            <img src="other/method-draw-image.svg">
+        </div>
         <div class="canvas" id="map"></div>
         <div class="timeline">
             <div id="startMoving">
-                <button type="button" class="btn btn-primary">Start</button>
+                <button type="button" class="btn btn-primary" id="sButton">Start</button>
                 <p><a href="javascript:;" id="clear">Clear</a></p>
             </div>
             <div id="timeline1"></div>
@@ -39,9 +97,20 @@
     </div>
 
 
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../bootstrap/dist/js/bootstrap.min.js"></script>
+
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/topojson.v2.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+
     <script src="brush.js"></script>
+    <script src="scroll.js"></script>
     <script src="overlay.js"></script>
     <!--<script src="map.js"></script>-->
     <script src="script.js"></script>

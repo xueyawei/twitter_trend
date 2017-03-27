@@ -211,7 +211,7 @@ function draw_all(twi) {
             return d.fsEvent
         })
         .attr("x",function (d) {
-            return x(d.date)
+            return x(d.date)+2
         })
         .attr("y",function (d,i) {
             return i*20+114
@@ -359,7 +359,7 @@ function draw_all(twi) {
                 d3.selectAll(".fsEvent")
                     .transition()
                     .duration(200)
-                    .style("opacity", "0.2")
+                    .style("opacity", "0.8")
             })
             .on("mouseout", function () {
                 d3.select(".all_line_show")
@@ -449,7 +449,7 @@ function draw_all(twi) {
                 d3.selectAll(".fsEvent")
                     .transition()
                     .duration(200)
-                    .style("opacity", "0.2")
+                    .style("opacity", "0.8")
 
 
             })
@@ -658,7 +658,7 @@ function news_table(news, id, wordFrequency) {
         .style("margin-left", "20px")
         .style("margin-top", "3px")
         .attr("select-id", this_news.id)
-        .attr("class","form-control")
+        // .attr("class","form-control")
         .on("change", function () {
 
             var target_value = this.value

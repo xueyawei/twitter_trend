@@ -1,0 +1,109 @@
+body {
+    padding-top: 50px;
+}
+
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.row {
+    text-align: center;
+    margin-top: 80px;
+}
+
+/* font setting*/
+body, h2, h3, p, text {
+    font-family: "Roboto", sans-serif;
+}
+
+.navHeader {
+    font-family: "Bodoni 72", serif;
+    font-size: 20px;
+}
+.favicon{
+    width: 30px;
+    display: inline !important;
+    margin-right: 16px;
+}
+h1 {
+    font-family: "Bodoni 72", serif;
+    font-weight: bold;
+    font-size: 40px;
+}
+/* --!font setting*/
+h3{
+    font-size: 20px;
+}
+.textContainer{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
+}
+p.lead{
+    font-size: 12px;
+    margin-bottom: 8px;
+
+}
+h2{
+    font-size: 18px;
+    font-family: "Bodoni 72",serif;
+}
+
+.col-lg-4 p{
+    font-size: 12px;
+}
+.col-lg-4 a{
+    font-size: 14px;
+}
+.textLeft,.lead{
+    /*text-align: left;*/
+}
+
+.img-circle{
+    width: 200px;
+    height:200px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #dfdfdf;
+}
+
+/* footer */
+.footer{
+    clear: both;
+    margin-right: 3%;
+    margin-bottom: 1%;
+    height: 250px;
+    margin-top: 100px;
+
+}
+.lastFloat{
+    margin-bottom: 5%;
+}
+/*footer text*/
+.footerText h2{
+    font-family: "Bodoni 72",serif;
+    line-height: 1.4;
+}
+.footerText p{
+    font-family: "Roboto",sans-serif;
+    font-size: 12px;
+}
+.footerText h2,.footerText p{
+    margin-left:0px;
+}
+.footerText{
+    float: right;
+
+}
+
+/*footer line*/
+.footerLine{
+    height: 170px;
+    width: 5px;
+    float: right;
+    background-color: #000000;
+    margin-right: 25px;
+    margin-top: 20px;
+}

@@ -94,3 +94,25 @@ li{
     font-weight: bold;
 
 }
+
+nav li{
+    font-weight: 400;
+}
+
+.navHeader {
+    font-family: "Bodoni 72", serif;
+    font-size: 20px;
+}
+.favicon{
+    width: 30px;
+    display: inline !important;
+    margin-right: 16px;
+}
+h1 {
+    font-family: "Bodoni 72", serif;
+    font-weight: bold;
+    font-size: 40px;
+}
+#container{
+    margin-top: 80px;
+}

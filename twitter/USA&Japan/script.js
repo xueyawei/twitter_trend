@@ -4,6 +4,7 @@ var margin = {t: 50, l: 50, b: 50, r: 50},
 
 console.log(width + " " + document.getElementById('map').clientHeight)
 
+scrollScene()
 
 var svg = d3.select('.canvas')
     .append('svg')
@@ -11,13 +12,19 @@ var svg = d3.select('.canvas')
     .attr('width', width + margin.l + margin.r)
     .attr('height', height + margin.t + margin.b);
 
+var introPos = d3.select(".introText").node().getBoundingClientRect()
+
+
+
 d3.select(".mainSvg").append("text")
-    .attr("x", 20)
+    .attr("x", introPos.left)
     .attr("y", margin.l)
     .text("Bomber Jacket + Flight Jacket")
 
+
+
 var projection = d3.geoAlbersUsa()
-    .scale(1300)
+    .scale(1100)
     .translate([width / 2-100, height / 2 + 50])
     .precision(.1);
 
