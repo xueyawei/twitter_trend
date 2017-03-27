@@ -754,6 +754,7 @@ function news_table(news, id, wordFrequency) {
             .attr("href", function (d) {
                 return d.link
             })
+            .attr("target","_blank")
             .append("h4")
             .style("margin-bottom", "0px")
             .style("margin-top", "5px")
