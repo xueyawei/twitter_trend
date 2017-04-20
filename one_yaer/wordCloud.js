@@ -91,6 +91,7 @@ function generateCloud(date, selectedID, wordFrequency) {
         rotationSteps: 2
     };
     // generate word cloud
+    console.log(wordCloudFormatList);
     WordCloud(canvas.node(), options)
 
 }
