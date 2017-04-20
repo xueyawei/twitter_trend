@@ -65,6 +65,7 @@ function generateCloud(date, selectedID, wordFrequency) {
 
     var minFontSizeSupport = WordCloud.minFontSize;
     var maxFontSize = cloudW * 0.1;
+    console.log(minFontSize);
 
     var cloudScale = d3.scaleLinear().domain(dataExtent).range([minFontSizeSupport, maxFontSize]);
     wordCloudFormatList.forEach(function (d) {
